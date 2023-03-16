@@ -451,7 +451,7 @@ MonoBehaviour:
   - {fileID: 1917491822}
   zPos: 25
   creatingSection: 0
-  secNum: 2
+  secNum: 1
 --- !u!4 &628053366
 Transform:
   m_ObjectHideFlags: 0
@@ -903,7 +903,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc2c1aa6518b454f9763a152fdc778a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 9
   rb: {fileID: 1094001821}
   jumpAmount: 5
 --- !u!114 &1094001823

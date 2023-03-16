@@ -40,6 +40,18 @@ public class PlayerController : MonoBehaviour
         movement.Normalize();
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
 
+        // Check if player's next position will exceed the level boundary
+        if (transform.position.x + movement.x * speed * Time.deltaTime < LevelBoundary.leftSide)
+        {
+            movement.x = (LevelBoundary.leftSide - transform.position.x) / (speed * Time.deltaTime);
+        }
+        else if (transform.position.x + movement.x * speed * Time.deltaTime > LevelBoundary.rightSide)
+        {
+            movement.x = (LevelBoundary.rightSide - transform.position.x) / (speed * Time.deltaTime);
+        }
+
+        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+
         if (movement != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
