@@ -36,10 +36,13 @@ public class GenerateLevel : MonoBehaviour
     {
         // Choose a random section prefab from the array
         secNum = Random.Range(0, 7);
+
         // Instantiate the chosen prefab at the current z position
         GameObject newSection = Instantiate(section[secNum], new Vector3(0, 0, zPos), Quaternion.identity);
+
         // Add a reference to the spawned section to the list
         spawnedSections.Add(newSection);
+
         // Increase the z position for the next section
         zPos += 25;
     }
@@ -48,15 +51,20 @@ public class GenerateLevel : MonoBehaviour
     {
         // Generate a new section
         GenerateNewSection();
+
         // Wait for a second before destroying clones
         yield return new WaitForSeconds(1);
         creatingSection = false;
+
         // Destroy clones one at a time more quickly
-        float delayTime = 5f; // decrease the delay time
+        float delayTime = 5f;
+        
+        // decrease the delay time
         for (int i = 0; i < spawnedSections.Count; i++)
         {
             // Wait for a shorter time before destroying the next clone
             yield return new WaitForSeconds(delayTime);
+
             // Destroy the i-th section in the list
             Destroy(spawnedSections[i]);
         }

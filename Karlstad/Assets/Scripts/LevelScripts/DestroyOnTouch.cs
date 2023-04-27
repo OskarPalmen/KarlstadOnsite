@@ -6,6 +6,7 @@ public class DestroyOnTouch : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(other.gameObject); //Destroys other Game objekts it tuches
+        //Destroys other Game objekts it tuches
+        Destroy(other.gameObject); 
     }
 }

@@ -5,32 +5,84 @@ using TMPro;
 
 public class GameOverManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameOverScreen; // Reference to the game over screen object.
-    [SerializeField] TMP_Text currentScore; // Reference to the current score display object.
-    [SerializeField] TMP_Text finalScore; // Reference to the final score display object.
+    [SerializeField] GameObject gameOverScreen; 
+    [SerializeField] TMP_Text currentScore; 
+    [SerializeField] TMP_Text finalScore; 
+    [SerializeField] GameObject PausedMenue;
+    [SerializeField] GameObject PauseButton;
+    [SerializeField] GameObject OptionsMenu;
+
+    public GameObject MoveCanvas;
 
     public void SetGameOver()
     {
-        gameOverScreen.SetActive(true); // Activate the game over screen.
+        // Activate the game over screen.
+        gameOverScreen.SetActive(true);
 
-        finalScore.text = currentScore.text; // Set the final score display to the current score.
+        // Set the final score display to the current score.
+        finalScore.text = currentScore.text;
 
-        currentScore.gameObject.SetActive(false); // Deactivate the current score display.
+        // Deactivate the current score display.
+        currentScore.gameObject.SetActive(false);
 
-        Time.timeScale = 0; // Freeze the game by setting the time scale to 0.
+        // Deactivate the Move Canvas.
+        MoveCanvas.gameObject.SetActive(false);
+
+        // Deactivate the Pause Button.
+        PauseButton.gameObject.SetActive(false);
+
+        // Stops the music form the adudio manager
+        FindObjectOfType<AudioManager>().Stop("Music");
+
+        // Freeze the game by setting the time scale to 0.
+        Time.timeScale = 0;
     }
 
     public void RestartGame()
     {
-        Time.timeScale = 1; // Resume the game by setting the time scale to 1.
+        // Resume the game by setting the time scale to 1.
+        Time.timeScale = 1;
 
-        SceneManager.LoadScene(0); // Load the first scene to restart the game.
+        // Load the first scene to restart the game.
+        SceneManager.LoadScene(0);
+    }
+
+    public void SetPausedMenue()
+    {
+        // Activates the paused menu game object
+        PausedMenue.SetActive(true);
+
+        // Freezes time so that the game is paused
+        Time.timeScale = 0;
+    }
+
+    public void SetContiniue()
+    {
+        // Deactivates the paused menu game object
+        PausedMenue.SetActive(false);
+
+        // Unfreezes time so that the game continues
+        Time.timeScale = 1;
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quit"); // Output "Quit" to the console for debugging purposes.
+        // Output "Quit" to the console for debugging purposes.
+        Debug.Log("Quit");
 
-        Application.Quit(); // Quit the application.
+        // Quit the application.
+        Application.Quit();
+    }
+
+    public void SetOptionsStart()
+    {
+        // Activates the options menu game object
+        OptionsMenu.SetActive(true);
+    }
+
+    public void SetOptionsDone()
+    {
+        // Deactivates the options menu game object
+        OptionsMenu.SetActive(false);
     }
 }

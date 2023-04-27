@@ -7,75 +7,124 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public bool gameStarted = false; // flag to indicate when the game has started
-    public bool gameOver = false; // flag to indicate when the game is over
-    public GameObject startButton; // reference to the start button
-    public TMP_Text scoreText; // reference to the score text
-    private int score = 0; // current score
-    public TMP_Text highScoreText; // reference to the high score text
-    private int highScore = 0; // current high score
+    public bool gameStarted = false; 
+    public bool gameOver = false; 
+    public GameObject startButton; 
+    public TMP_Text scoreText; 
+    private float score = 0f; 
+    public TMP_Text highScoreText; 
+    private int highScore = 0; 
+    public GameObject MoveCanvas;
+    public GameObject PauseButton;
+    public TMP_Text secondHighScoreText;
 
     void Awake()
     {
-        Time.timeScale = 0; // pause the game at start
-        highScore = PlayerPrefs.GetInt("HighScore", 0); // get the saved high score
-        highScoreText.text = "High Score: " + highScore; // display the high score
+        // Pause the game at start
+        Time.timeScale = 0;
+
+        // Get the saved high score
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        // Display the high score
+        highScoreText.text = "High Score: " + highScore;
+
+        // Display the second high score
+        secondHighScoreText.text = "High Score: " + highScore;
     }
 
     void Update()
     {
-        if (gameStarted) // check if the game has started
+        // Check if the game has started
+        if (gameStarted) 
         {
-            if (!Time.timeScale.Equals(0)) // check if the game is running
-            {
-                score += 1; // increase score by 1 every second
-                scoreText.text = "Score:" + score; // update the score text
+            // Increase score over time
+            score += Time.deltaTime * 2f;
 
-                if (score > highScore) // check if the current score is higher than the high score
-                {
-                    highScore = score; // update the high score
-                    highScoreText.text = "High Score: " + highScore; // update the high score text
-                    PlayerPrefs.SetInt("HighScore", highScore); // save the new high score
-                }
+            // Update the score text
+            scoreText.text = "Score: " + Mathf.RoundToInt(score);
+
+            // Check if the current score is higher than the high score
+            if (score > highScore) 
+            {
+                // Update the high score
+                highScore = Mathf.RoundToInt(score);
+
+                // Update the high score text
+                highScoreText.text = "High Score: " + highScore;
+
+                // Update the second high score text
+                secondHighScoreText.text = "High Score: " + highScore;
+
+                // Save the new high score
+                PlayerPrefs.SetInt("HighScore", highScore); 
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) // check if the player pressed the R key
+        // Check if the player pressed the R key
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            Restart(); // restart the game
+            // Restart the game
+            Restart(); 
         }
 
-        if (Input.GetKeyDown(KeyCode.P)) // check if the player pressed the P key
+        // Check if the player pressed the P key
+        if (Input.GetKeyDown(KeyCode.P)) 
         {
-            ResetHighScore(); // reset the high score
+            // Reset the high score
+            ResetHighScore(); 
         }
-
     }
 
     void ResetHighScore()
     {
-        highScore = 0; // reset the high score
-        highScoreText.text = "High Score: " + highScore; // update the high score text
-        PlayerPrefs.SetInt("HighScore", highScore); // save the new high score
-    }
+        // Reset the high score
+        highScore = 0;
 
+        // Update the high score text
+        highScoreText.text = "High Score: " + highScore;
+
+        // Save the new high score
+        PlayerPrefs.SetInt("HighScore ", highScore);
+    }
 
     void Restart()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex; // get the current scene index
-        SceneManager.LoadScene(currentSceneIndex); // reload the current scene
+        // Get the current scene index
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Reload the current scene
+        SceneManager.LoadScene(currentSceneIndex); 
     }
 
     public void StartGame()
     {
-        gameStarted = true; // set the game as started
-        Time.timeScale = 1; // resume the game
-        startButton.SetActive(false); // hide the start button
-        scoreText.gameObject.SetActive(true); // make the score text visible
+        // Set the game as started
+        gameStarted = true;
+
+        // Resume the game
+        Time.timeScale = 1;
+
+        // Hide the start button
+        startButton.SetActive(false);
+
+        // Make the score text visible
+        scoreText.gameObject.SetActive(true); 
+
+        // Sets the Move Canvas to true
+        MoveCanvas.gameObject.SetActive(true);
+
+        // Sets the Pause Button to true
+        PauseButton.SetActive(true);
+
+        // Finds the AudioManager and start the music
+        FindObjectOfType<AudioManager>().Play("Music");
     }
 
     public void GameOver()
     {
-        gameOver = true; // set the game as over
+        // Set the game as over
+        gameOver = true; 
     }
+
 }

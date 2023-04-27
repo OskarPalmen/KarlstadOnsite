@@ -9,6 +9,8 @@ public class PlayerCollideManager : MonoBehaviour
         // Check if the object we collided with has the "Enemy" tag.
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            FindObjectOfType<AudioManager>().Play("Explotion");
+
             // If it does, print "Game Over" to the console.
             Debug.Log("Game Over");
 
